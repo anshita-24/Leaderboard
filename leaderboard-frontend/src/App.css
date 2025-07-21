@@ -1,0 +1,89 @@
+/* General styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f6f9fc, #e0f7fa);
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #ffffffc4;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1e3a5f;
+}
+
+select, input {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #00796b;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+select:hover, input:hover {
+  border-color: #004d40;
+}
+
+button {
+  padding: 0.5rem 1.2rem;
+  margin-left: 1rem;
+  background-color: #0288d1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #01579b;
+}
+
+.user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6rem 0;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-left: 5px solid #0288d1;
+  border-radius: 8px;
+  background-color: #f1faff;
+  transition: transform 0.2s;
+}
+
+.user-card:hover {
+  transform: scale(1.02);
+}
+
+.user-info {
+  text-align: left;
+}
+
+.username {
+  font-weight: bold;
+  color: #333;
+}
+
+.points {
+  font-size: 1rem;
+  color: #006064;
+}
+
+.leader-icon {
+  font-size: 1.8rem;
+  margin-right: 10px;
+}
