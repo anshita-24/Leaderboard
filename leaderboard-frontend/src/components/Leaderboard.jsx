@@ -1,60 +1,80 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from 'react';
 
-export default function Leaderboard() {
-  const [users, setUsers] = useState([]);
-  const [claiming, setClaiming] = useState(false);
+const medalEmoji = ['🥇', '🥈', '🥉'];
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    const res = await axios.get("/api/users");
-    const sorted = res.data.sort((a, b) => b.points - a.points);
-    setUsers(sorted);
-  };
-
-  const handleClaim = async (userId) => {
-    setClaiming(true);
-    try {
-      await axios.post(`/api/claims/${userId}`);
-      await fetchUsers();
-    } catch (err) {
-      console.error(err);
-    }
-    setClaiming(false);
-  };
-
+const Leaderboard = ({ users }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-white py-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-purple-700">🏆 Leaderboard</h1>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+    <div className="leaderboard">
+      <h2>🏆 Leaderboard</h2>
+      <ul className="leaderboard-list">
         {users.map((user, index) => (
-          <div
-            key={user._id}
-            className="bg-white shadow-lg rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-          >
-            <div className="flex flex-col sm:flex-row items-center sm:gap-4 w-full">
-              <span className="text-lg font-semibold text-gray-700 w-12 text-center">{index + 1}.</span>
-              <span className="text-xl font-medium text-gray-900">{user.name}</span>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <span className="text-green-600 font-bold">{user.points} pts</span>
-              <button
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm sm:text-base transition duration-200"
-                onClick={() => handleClaim(user._id)}
-                disabled={claiming}
-              >
-                Claim Points
-              </button>
-            </div>
-          </div>
+          <li className="leaderboard-item" key={user._id}>
+            <span className="rank">{medalEmoji[index] || `${index + 1}️⃣`}</span>
+            <span className="name">{user.name}</span>
+            <span className="points">{user.totalPoints ?? 0} pts</span>
+          </li>
         ))}
-      </div>
+      </ul>
+
+      {/* Inline CSS styles */}
+      <style>{`
+        .leaderboard {
+          text-align: center;
+          padding: 20px;
+          background: #faf0f8;
+          min-height: 100vh;
+        }
+
+        .leaderboard h2 {
+          font-size: 2rem;
+          margin-bottom: 25px;
+          color: #7b2cbf;
+        }
+
+        .leaderboard-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .leaderboard-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #fff;
+          padding: 14px 22px;
+          margin: 12px auto;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 500px;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+          font-size: 1.1rem;
+          font-weight: 500;
+          transition: transform 0.2s ease;
+        }
+
+        .leaderboard-item:hover {
+          transform: scale(1.02);
+        }
+
+        .rank {
+          font-size: 1.5rem;
+        }
+
+        .name {
+          flex: 1;
+          margin-left: 18px;
+          text-align: left;
+          color: #333;
+        }
+
+        .points {
+          color: #9d4edd;
+          font-weight: bold;
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default Leaderboard;

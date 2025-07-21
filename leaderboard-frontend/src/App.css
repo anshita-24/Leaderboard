@@ -1,89 +1,60 @@
-/* General styling */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f6f9fc, #e0f7fa);
-  color: #333;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #c3cfe2, #dde2f2);
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4b0082;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .container {
-  max-width: 800px;
-  margin: auto;
-  padding: 2rem;
-  text-align: center;
-  background-color: #ffffffc4;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #1e3a5f;
-}
-
-select, input {
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  border: 2px solid #00796b;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-}
-
-select:hover, input:hover {
-  border-color: #004d40;
-}
-
-button {
-  padding: 0.5rem 1.2rem;
-  margin-left: 1rem;
-  background-color: #0288d1;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-button:hover {
-  background-color: #01579b;
-}
-
-.user-card {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.6rem 0;
-  padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
-  border-left: 5px solid #0288d1;
-  border-radius: 8px;
-  background-color: #f1faff;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  flex: 1 1 450px;
+  max-width: 500px;
   transition: transform 0.2s;
 }
 
-.user-card:hover {
+.card:hover {
   transform: scale(1.02);
 }
 
-.user-info {
-  text-align: left;
+.left-panel {
+  background: linear-gradient(to right, #e6f0ff, #f2f4fb);
 }
 
-.username {
-  font-weight: bold;
-  color: #333;
+.right-panel {
+  background: linear-gradient(to right, #fff0f5, #fbe6f8);
 }
 
-.points {
-  font-size: 1rem;
-  color: #006064;
-}
-
-.leader-icon {
-  font-size: 1.8rem;
-  margin-right: 10px;
+.history-panel {
+  margin-top: 30px;
+  background: linear-gradient(to right, #e8ffe8, #f4fff4);
+  max-width: 1020px;
+  width: 100%;
 }

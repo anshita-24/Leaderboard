@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import './App.css';
 import UserSelect from './components/UserSelect';
 import ClaimPoints from './components/ClaimPoints';
 import Leaderboard from './components/Leaderboard';
@@ -11,44 +12,89 @@ function App() {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users')
-      .then(res => setUsers(res.data));
+    fetchUsers();
   }, []);
 
-  const fetchHistory = (userId) => {
-    axios.get(`http://localhost:5000/api/claims/${userId}`)
-      .then(res => setHistory(res.data));
+  const fetchUsers = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/users');
+      const sorted = res.data.sort((a, b) => b.totalPoints - a.totalPoints);
+      setUsers(sorted);
+    } catch (err) {
+      console.error('Failed to fetch users:', err);
+    }
+  };
+
+  const fetchHistory = async (userId) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/claims/${userId}`);
+      setHistory(res.data);
+    } catch (err) {
+      console.error('Failed to fetch history:', err);
+    }
   };
 
   return (
-    <div className="min-h-screen px-4 py-10 bg-gradient-to-br from-indigo-100 to-purple-200 font-sans flex flex-col items-center">
-      <h1 className="text-4xl sm:text-5xl font-extrabold text-center mb-10 text-purple-900 tracking-wide flex items-center gap-3">
-        <span role="img" aria-label="trophy">🏆</span> Leaderboard System
-      </h1>
+    <div className="app">
+      <h1 className="title">🏆 Leaderboard System</h1>
 
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left: User Select & Claim */}
-        <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full">
+      <div className="main-container">
+        <div className="card left-panel">
           <UserSelect users={users} setSelectedUser={setSelectedUser} fetchHistory={fetchHistory} />
           {selectedUser && (
-            <div className="mt-6">
+            <div style={{ marginTop: '20px' }}>
               <ClaimPoints user={selectedUser} fetchHistory={fetchHistory} />
             </div>
           )}
         </div>
 
-        {/* Right: Leaderboard */}
-        <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full">
+        <div className="card right-panel">
           <Leaderboard users={users} />
         </div>
       </div>
 
-      {/* Claim History */}
       {selectedUser && (
-        <div className="w-full max-w-4xl mt-10 bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
+        <div className="card history-panel">
           <ClaimHistory history={history} />
         </div>
       )}
+
+      {/* Inline App CSS */}
+      <style>{`
+        .main-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          justify-content: center;
+          padding: 20px;
+        }
+
+        .card {
+          background: #fdfbff;
+          padding: 20px;
+          border-radius: 16px;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+          width: 100%;
+          max-width: 400px;
+        }
+
+        .right-panel {
+          flex: 1;
+          max-width: 500px;
+        }
+
+        .history-panel {
+          margin: 30px auto;
+          max-width: 600px;
+        }
+
+        .title {
+          text-align: center;
+          font-size: 2rem;
+          margin-top: 30px;
+          color: #5c2d91;
+        }
+      `}</style>
     </div>
   );
 }
